@@ -1,2 +1,26 @@
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs & temp
 *.log
+*.tmp
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Scaffolding produced by setup.sh (these are generated per-project,
+# not part of this template repo itself)
+.trellis/
+.gitnexus/

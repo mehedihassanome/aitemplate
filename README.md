@@ -1,6 +1,23 @@
 # aitemplate
 
-Project-agnostic bootstrap for the **Trellis** workflow framework + **GitNexus** code intelligence (+ skills). Run `setup.sh` in any new project directory to get the full scaffolding in seconds.
+> One-command bootstrap for **Trellis** + **GitNexus** (+ skills) in any project.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Shell: Bash](https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Platform: macOS / Linux](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux-lightgrey)](#prerequisites)
+
+Run `setup.sh` in any new project directory to scaffold the full Trellis workflow + GitNexus code-intelligence stack in seconds.
+
+## Table of contents
+
+- [What it sets up](#what-it-sets-up)
+- [Prerequisites](#prerequisites)
+- [Usage](#usage)
+- [Options](#options)
+- [Idempotent & safe](#idempotent--safe)
+- [Global skills](#global-skills)
+- [Repository structure](#repository-structure)
+- [License](#license)
 
 ## What it sets up
 
@@ -18,7 +35,8 @@ Global skills in `~/.agents/skills/` and `~/.pi/agent/skills/` are auto-loaded b
 
 ## Prerequisites
 
-- **Node.js** (LTS) + npm — only required for `--machine` (installs the CLIs).
+- **macOS or Linux** with **Bash** 4+.
+- **Node.js** (LTS) + **npm** — only required for `--machine` (installs the CLIs).
 
 ## Usage
 
@@ -32,7 +50,7 @@ cd ~/projects/some-new-repo
 bash ~/projects/aitemplate/setup.sh
 ```
 
-### Options
+## Options
 
 ```
 --machine                 Also run first-time-per-machine setup first
@@ -52,7 +70,7 @@ Other valid platforms: `cursor`, `kilo`, `kiro`, `gemini`, `antigravity`, `winds
 - `gitnexus setup` merges into existing MCP/hook config (safe to re-run).
 - `npm install -g` is skipped if the binary is already present.
 
-## Global skills note
+## Global skills
 
 `setup.sh --machine` **detects** the global skill collections but does not blindly install them (the installer for non-gitnexus sets varies). If they're missing it prints guidance, e.g.:
 
@@ -62,6 +80,17 @@ pi install git:github.com/mattpocock/skills   # verify the command for your setu
 
 GitNexus's own skills are installed automatically by `gitnexus setup`.
 
-## Files
+## Repository structure
 
-- `setup.sh` — the bootstrap script.
+```
+aitemplate/
+├── setup.sh        # the bootstrap script
+├── README.md       # this file
+├── LICENSE         # MIT
+├── .editorconfig   # editor consistency
+└── .gitignore
+```
+
+## License
+
+Released under the [MIT License](LICENSE).
