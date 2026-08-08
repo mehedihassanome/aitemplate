@@ -14,7 +14,7 @@ Run `setup.sh` in any new project directory to scaffold the full **Trellis** wor
 - [The three pillars](#the-three-pillars)
 - [How it fits together](#how-it-fits-together)
 - [Prerequisites](#prerequisites)
-- [Replication guide (start here)](#replication-guide-start-here)
+- [Replication/Installation guide (start here)](#replication-guide-start-here)
 - [Options](#options)
 - [What it sets up](#what-it-sets-up)
 - [Idempotent & safe](#idempotent--safe)
@@ -83,7 +83,7 @@ flowchart TD
 
 > Windows? Use WSL2 with Bash. The script assumes a POSIX shell.
 
-## Replication guide (start here)
+## Replication/Installation guide (start here)
 
 Two phases: a **once-per-machine** bootstrap, then a **per-project** init you repeat for every repo.
 
