@@ -1,0 +1,38 @@
+# Fallback iwe config — written only when the iwe CLI is not installed.
+# Once iwe is available, run `iwe init --auto` to replace this with a config
+# detected from your actual markdown.
+format = "markdown"
+version = 3
+
+[library]
+date_format = "%Y-%m-%d"
+path = ""
+
+[markdown]
+date_format = "%b %d, %Y"
+refs_extension = ".md"
+refs_path = "relative"
+refs_text = "preserve"
+wiki_link_path = "preserve"
+
+[markdown.formatting]
+ordered_list_content_indent = 3
+preserve_newlines = true
+rule_token_count = 3
+
+[completion]
+link_format = "markdown"
+
+[search]
+language = "english"
+
+[templates.default]
+document_template = """
+# {{title}}
+
+{{content}}"""
+key_template = "{{slug}}"
+
+[commands.default]
+run = "claude -p"
+timeout_seconds = 120

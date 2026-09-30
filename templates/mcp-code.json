@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "gitnexus": {
+      "command": "gitnexus",
+      "args": ["mcp"],
+      "cwd": "."
+    },
+    "iwe": {
+      "command": "iwec",
+      "args": [],
+      "cwd": "."
+    }
+  }
+}

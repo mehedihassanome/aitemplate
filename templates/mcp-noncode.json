@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "iwe": {
+      "command": "iwec",
+      "args": [],
+      "cwd": "."
+    },
+    "open-knowledge": {
+      "command": "ok",
+      "args": ["mcp"],
+      "cwd": "."
+    }
+  }
+}
