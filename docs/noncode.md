@@ -9,7 +9,7 @@ and editing layer.
 | Layer     | Tool                | Lands in                     | Why                                                                    |
 | --------- | ------------------- | ---------------------------- | ---------------------------------------------------------------------- |
 | Process   | Trellis             | `.trellis/` + per-agent dirs | keeps a research/writing project structured too                        |
-| Knowledge | iwe                 | `.iwe/`, `.mcp.json`         | markdown knowledge graph — the doc corpus itself                       |
+| Knowledge | iwe                 | `.iwe/`, `.mcp.json`         | markdown knowledge graph — the doc corpus itself                      |
 | Collab    | OpenKnowledge       | `.ok/`                       | CRDT editing, history, checkpoints, conflict resolution, audit         |
 | Skills    | `~/.agents/skills/` | machine-wide                 | `open-knowledge-discovery`, `open-knowledge-write-skill`, + global set |
 

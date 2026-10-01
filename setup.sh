@@ -44,7 +44,6 @@ _info() { printf '%s▸%s %s\n' "$C_B" "$C_0" "$*"; }
 _ok()   { printf '%s✓%s %s\n' "$C_G" "$C_0" "$*"; }
 _warn() { printf '%s⚠%s %s\n' "$C_Y" "$C_0" "$*" >&2; }
 _die()  { printf '%s✗%s %s\n' "$C_R" "$C_0" "$*" >&2; exit 1; }
-_step() { [[ $DRY_RUN -eq 1 ]] && printf '%s  [dry-run]%s %s\n' "$C_D" "$C_0" "$*" || true; }
 
 _have() { command -v "$1" >/dev/null 2>&1; }
 
@@ -145,7 +144,12 @@ detect_direction() {
 }
 
 if [[ -z "$DIRECTION" ]]; then
-  if [[ -t 0 ]]; then
+  if [[ $AUTO_DIRECTION -eq 1 || ! -t 0 ]]; then
+    # --auto was given, or there is no terminal (CI, pipe, agent). Detect
+    # silently rather than hang on read.
+    DIRECTION="$(detect_direction)"
+    AUTO_DIRECTION=1
+  else
     detected="$(detect_direction)"
     printf 'No direction given. Detected: %s\n' "$detected"
     printf '  [1] code     — Trellis + GitNexus + iwe\n'
@@ -159,10 +163,6 @@ if [[ -z "$DIRECTION" ]]; then
       "") DIRECTION="$detected" ;;
       *) _die "not a valid choice: $choice" ;;
     esac
-  else
-    # No terminal (CI, pipe, agent): detect silently rather than hang on read.
-    DIRECTION="$(detect_direction)"
-    AUTO_DIRECTION=1
   fi
 fi
 
@@ -316,16 +316,11 @@ init_iwe() {
 _info "MCP servers (direction: $DIRECTION)"
 write_if_absent ".mcp.json" "$SCRIPT_DIR/templates/mcp-$DIRECTION.json"
 
-if [[ "$DIRECTION" == "code" ]]; then
-  # Claude Code reads .mcp.json directly. Codex and OpenCode need their own keys —
-  # they do not read .mcp.json. Print the block rather than editing a user's
-  # global config from a script.
-  _have gitnexus || _warn "gitnexus CLI missing — \`gitnexus setup\` (or --machine) registers its MCP server"
-fi
-
 # ── 4. Direction-specific tools ───────────────────────────────────────
 if [[ "$DIRECTION" == "code" ]]; then
-  _have gitnexus || _die "gitnexus CLI missing — re-run with --machine, or: npm i -g gitnexus"
+  # Claude Code reads .mcp.json directly. Codex and OpenCode need their own keys —
+  # they do not read .mcp.json, so `gitnexus setup` must register them.
+  _have gitnexus || _die "gitnexus CLI missing — re-run with --machine, or: npm i -g gitnexus, then: gitnexus setup"
   if [[ $NO_ANALYZE -eq 1 ]]; then
     _info "skipping gitnexus analyze (--no-analyze)"
   elif [[ -d ".gitnexus" ]]; then
@@ -357,8 +352,10 @@ else
   if [[ $NO_SEED -eq 1 ]]; then
     _info "skipping ok seed (--no-seed)"
   elif [[ $DRY_RUN -eq 1 ]]; then
+    # A dry run writes nothing, so `.ok/` may not exist yet. Report what would
+    # run rather than what exists now.
     _info "ok seed (starter pack: $SEED_PACK)"
-    _run ok seed --pack "$SEED_PACK" --yes || _warn "ok seed failed — optional, retry with \`ok seed\`"
+    _run ok seed --pack "$SEED_PACK" --yes
   elif [[ ! -d ".ok" ]]; then
     _info "skipping ok seed (.ok/ was not created)"
   elif _have ok; then
